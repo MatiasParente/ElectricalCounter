@@ -1,0 +1,87 @@
+Direcciones de subredes
+
+Oficina de gerente
+
+Cantidad de host: 6
+2**3-2
+255.255.255.248 (/29)
+00001|000 = 8 D.S
+00001|111 = 15 D.B
+
+Oficina de recepción 
+
+Cantidad de host: 6
+2**3-2
+255.255.255.248 (/29)
+00010|000 = 16 D.S
+00010|111 = 23 D.B
+
+Conexión inalámbrica pública
+
+Cantidad de host: 6
+2**3-2
+255.255.255.248 (/29)
+00011|000 = 24 D.S
+00011|111 = 31 D.B
+
+Oficina de empleados azul
+
+Cantidad de host: 14
+2**4-2
+255.255.255.240 (/28)
+0001|0000 = 16 D.S
+0001|1111 = 31 D.B
+
+Oficina de empleados naranja
+
+Cantidad de host: 14
+2**4-2
+255.255.255.240 (/28)
+0010|0000 = 32 D.S
+0010|1111 = 47 D.B
+
+Conexión inalámbrica privada
+
+Cantidad de host: 14
+2**4-2
+255.255.255.240 (/28)
+0011|0000 = 48 D.S
+0011|1111 = 63 D.B
+
+Servidores (Amarillo)
+
+Cantidad de host: 30
+2**5-2
+255.255.255.224 (/27)
+001|00000 = 32 D.S
+001|11111 = 63 D.B
+
+Oficina de empleados rosado
+
+Cantidad de host: 30
+2**5-2
+255.255.255.224 (/27)
+010|00000 = 64 D.S
+010|11111 = 95 D.B
+
+Oficina de empleados roja
+
+Cantidad de host: 30
+2**5-2
+255.255.255.224 (/27)
+011|00000 = 96 D.S
+011|11111 = 127 D.B
+
+Oficina de empledos amarilla
+
+Cantidad de host: 30
+2**5-2
+255.255.255.224 (/27)
+100|00000 = 128 D.S
+100|11111 = 159 D.B
+
+
+
+
+
+

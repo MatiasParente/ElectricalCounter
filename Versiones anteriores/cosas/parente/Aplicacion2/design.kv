@@ -1,0 +1,382 @@
+#:kivy 2.2.1
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+<ConnectionScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        
+        MDLabel:
+            text: "Error de conexión"
+            font_style: "H5"
+            theme_text_color: "Secondary"
+            halign: "center"
+        
+        MDRaisedButton:
+            on_release:
+                app.root.transition = SlideTransition(direction='left')
+                app.root.current = 'Screen_Principal'
+
+<ElementCard@MDCard>:
+    radius: '10dp'
+    spacing: '10dp'
+    padding: '10dp'
+    text: ''
+    image: ''
+    orientation: 'vertical'
+    ripple_behavior: True
+    md_bg_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.8, 0.5, 1  
+        Line:
+            width: 3  
+            rectangle: self.x, self.y, self.width, self.height
+    
+    on_release:
+        app.root.transition = RiseInTransition()
+
+    MDBoxLayout:
+        size_hint: (1, 1)  
+        height: self.minimum_height  
+        
+        Image: 
+            size_hint: (1, 1)  
+            allow_stretch: True 
+            source: root.image
+        
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDLabel:
+                text: root.text
+                halign:'center'
+                pos_hint: {'left_y': -0.02}
+                font_size: 25
+
+<CustomizeScreen@MDBoxLayout>:
+    orientation: 'vertical'
+    text: ''
+    padding: 10
+    MDLabel:
+        text: root.text
+        halign:'center'
+        pos_hint: {'left_x': .02}
+        pos_hint: {'left_y': .02}
+    MDFillRoundFlatButton:
+        text: '__REGRESAR__'
+        pos_hint: {'left_x':  .02}
+        pos_hint: {'left_y':  .02}
+
+        on_release:
+            app.root.current = 'Screen_Principal'
+            app.root.transition = SlideTransition(direction='left')
+
+#=================================================================================================
+
+<Ui>:
+    MDScreen:
+        name: 'Screen_Principal'
+        md_bg_color: 0, 0, 0, 0
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: '10dp'
+
+            MDBoxLayout:
+                size_hint: 1, 0.2
+                orientation: 'horizontal'
+                padding: '10dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: dp(100)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+
+                    MDLabel:
+                        text: 'Electrical Counter'
+                        font_style: 'H4'
+                        halign:'center'
+                        pos_hint: {'center_y': 0.5}
+
+            MDBoxLayout:
+                size_hint: 1, 0.2
+                orientation: 'horizontal'
+                padding: '10dp'
+                spacing: '10dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 0.5, None
+                    height: dp(100)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+                    spacing: '5dp'
+
+                    MDLabel:
+                        text: 'Consumo total del dia Kwh : ' 
+                        font_size: 20
+                        halign:'center'
+                        
+                    
+                    MDLabel:
+                        text: 'Precio total del dia $ :' 
+                        font_size: 20
+                        halign:'center'
+                       
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 0.5, None
+                    height: dp(100)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+                    spacing: '5dp'
+
+                    MDLabel:
+                        text: 'Consumo Total del mes Kwh : '
+                        font_size: 20
+                        halign:'center'
+                        
+
+                    MDLabel:
+                        text: 'Precio Total del mes $ : '
+                        font_size: 20
+                        halign:'center'
+                        
+
+
+            MDGridLayout:
+                cols: 2
+                size_hint: 1, 0.8
+                padding: ['10dp','10dp','10dp','10dp',]
+                spacing: '10dp'
+
+                ElementCard:
+                    text: 'Controles'
+                    image: 'controles.jpg'
+                    on_release:
+                        root.current = 'screen1'
+                ElementCard:
+                    text: 'Graficos'
+                    image: 'graficas.jpg'
+                    on_release:
+                        on_release: app.button_action2(1) 
+                        #root.current = 'screen2'
+                ElementCard:
+                    text: 'Datos'
+                    image: 'usuario.jpg'
+                    on_release:
+                        root.current = 'screen3'
+                ElementCard:
+                    text: 'Consegos'
+                    image: 'controles.jpg'
+                    on_release:
+                        root.current = 'screen4'
+                ElementCard:
+                    text: 'Notificaciones'
+                    image: 'graficas.jpg'
+                    on_release:
+                        root.current = 'screen5'
+                ElementCard:
+                    text: 'Dispocitivos'
+                    image: 'usuario.jpg'
+                    on_release:
+                        root.current = 'screen6'
+
+
+#==============================================================================================================================
+
+
+    MDScreen:
+        name: 'screen1'
+        md_bg_color: 0, 0, 0, 0
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '300dp']
+            spacing: '10dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color:  0.2, 0.8, 0.5, 1
+
+                MDLabel:
+                    text: 'Controles'
+                    halign: 'center'
+                    valign: 'middle'
+                    theme_text_color: 'Primary'
+                    font_style: 'H4'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Switch 1'
+                    halign: 'center'
+    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_1( self.active) 
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Switch 2'
+                    halign: 'center'
+    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_2( self.active)  
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Switch 3'
+                    halign: 'center'
+    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_3( self.active) 
+
+
+
+        CustomizeScreen:
+
+            
+
+#==============================================================================================================================
+
+
+
+    MDScreen:
+        name: 'screen2'
+        CustomizeScreen:
+            text: 'Pantalla de graficos'
+
+
+
+
+#===============================================================================================================================
+    MDScreen:
+        name: 'screen3'
+        CustomizeScreen:
+            text: 'Pantallas del Usuario'
+
+
+
+#===============================================================================================================================
+    MDScreen:
+        name: 'screen4'
+        CustomizeScreen:
+            text: 'Pantalla de Consejos'
+
+#===============================================================================================================================
+    MDScreen:
+        name: 'screen5'
+        CustomizeScreen:
+            text: 'Pantalla de Notificaciones'
+
+
+#===============================================================================================================================
+
+    MDScreen:
+        name: 'screen6'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '300dp']
+            spacing: '10dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color:  0.2, 0.8, 0.5, 1
+
+                MDLabel:
+                    text: 'Dispocitivos'
+                    halign: 'center'
+                    valign: 'middle'
+                    theme_text_color: 'Primary'
+                    font_style: 'H4'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Verificar Dispocitivo'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Verificar Dispositivo'
+                    on_release: app.button_action(1)  # Agrega la acción que desees
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Verificar Servidor'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Verificar Servidor'
+                    on_release: app.button_action(2)  # Agrega la acción que desees
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Datos Generales'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Datos Generales'
+                    on_release: app.button_action(3)  # Agrega la acción que desees
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+
+
+        CustomizeScreen:
+        
+#===============================================================================================================================

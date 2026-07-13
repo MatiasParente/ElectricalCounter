@@ -1,0 +1,823 @@
+#:kivy 2.2.1
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+
+<ConnectionScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        
+        MDLabel:
+            text: "Error de conexión"
+            font_style: "H5"
+            theme_text_color: "Secondary"
+            halign: "center"
+        
+        MDRaisedButton:
+            on_release:
+                root.manager.current = 'Screen_Menu'
+                
+
+
+<ElementCard@MDCard>:
+    radius: '10dp'
+    spacing: '10dp'
+    padding: '10dp'
+    text: ''
+    image: ''
+    orientation: 'vertical'
+    ripple_behavior: True
+    md_bg_color: 0, 0, 0, 0
+    transition: RiseInTransition()
+
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.8, 0.5, 1  
+        Line:
+            width: 3  
+            rectangle: self.x, self.y, self.width, self.height
+
+    MDBoxLayout:
+        size_hint: (1, 1)  
+        height: self.minimum_height  
+        
+        Image: 
+            size_hint: (1, 1)  
+            allow_stretch: True 
+            source: root.image
+        
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDLabel:
+                text: root.text
+                halign:'center'
+                pos_hint: {'left_y': -0.02}
+                font_size: 20
+
+<CustomizeScreen@MDBoxLayout>:
+    orientation: 'vertical'
+    text: ''
+    padding: 10
+    MDLabel:
+        text: root.text
+        halign:'center'
+        pos_hint: {'left_x': .02}
+        pos_hint: {'left_y': .02}
+    MDFillRoundFlatButton:
+        text: '__REGRESAR__'
+        pos_hint: {'left_x':  .02}
+        pos_hint: {'left_y':  .02}
+
+        on_release: app.button_action_Regresar(1)
+
+
+
+
+
+
+#=================================================================================================
+
+
+<LoginScreen>:
+   
+    MDScreen:
+        name: 'login'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [20, 0]
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'  # Centro verticalmente
+                MDIcon:
+                    icon: 'account'
+                    icon_color: 0, 0, 0, 0
+                    halign: 'center'
+                    font_size: 250
+
+            MDCard:
+                size_hint: None, None
+                size: 220, 400  # Ajustar la altura de la tarjeta
+                pos_hint: {"center_x": 0.5}
+                elevation: 0
+                GridLayout:
+                    cols: 1
+                    spacing: 10
+                    padding: [20, 20]
+
+                    MDTextField:
+                        id: user
+                        icon_left: "account-check"
+                        hint_text: "Username"
+                        foreground_color: 1, 0, 1, 1
+                        size_hint_x: None
+                        width: 180
+                        font_size: 20
+                        pos_hint: {"center_x": 0.5}
+
+                    MDTextField:
+                        id: password
+                        icon_left: "key-variant"
+                        hint_text: "Password"
+                        foreground_color: 1, 0, 1, 1
+                        size_hint_x: None
+                        width: 180
+                        font_size: 20
+                        pos_hint: {"center_x": 0.5}
+                        password: True  # Mostrar la contraseña con viñetas
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 10
+                        size_hint_x: None
+                        width: 180
+                        pos_hint: {"center_x": 0.5}
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDRaisedButton:
+                            text: "Registrarse"
+                            font_size: 15
+                            on_release:
+                                root.manager.current = 'register'
+
+                        MDRaisedButton:
+                            text: "Ingresar"  # Nuevo botón "Ingresar"
+                            font_size: 15
+                            on_release: app.login()  # Llamar a la función login en la aplicación
+
+<RegisterScreen>:
+    MDScreen:
+        name: 'register'
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [20, 0]
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'  # Centro verticalmente
+                MDIcon:
+                    icon: 'account-plus'
+                    icon_color: 0, 0, 0, 0
+                    halign: 'center'
+                    font_size: 250
+
+            MDCard:
+                size_hint: None, None
+                size: 220, 400 
+                pos_hint: {"center_x": 0.5}
+                elevation: 0
+                GridLayout:
+                    cols: 1
+                    spacing: 10
+                    padding: [20, 20]
+
+                    MDTextField:
+                        id: register_user
+                        icon_left: "account-check"
+                        hint_text: "Username"
+                        foreground_color: 1, 0, 1, 1
+                        size_hint_x: None
+                        width: 180
+                        font_size: 20
+                        pos_hint: {"center_x": 0.5}
+
+                    MDTextField:
+                        id: register_email
+                        icon_left: "email"
+                        hint_text: "Email"
+                        foreground_color: 1, 0, 1, 1
+                        size_hint_x: None
+                        width: 180
+                        font_size: 20
+                        pos_hint: {"center_x": 0.5}
+
+                    MDTextField:
+                        id: register_password
+                        icon_left: "key-variant"
+                        hint_text: "Password"
+                        foreground_color: 1, 0, 1, 1
+                        size_hint_x: None
+                        width: 180
+                        font_size: 20
+                        pos_hint: {"center_x": 0.5}
+                        password: True  
+
+                    MDDropDownItem:
+                        id: ute_dropdown
+                        pos_hint: {"center_x": 0.5}
+                        width: 180
+                        dropdown_cls: "MyDropdown"
+                        text: "Plan de UTE"
+                        on_release: app.show_ute_menu(self)
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 10
+                        size_hint_x: None
+                        width: 180
+                        pos_hint: {"center_x": 0.5}
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        MDRaisedButton:
+                            text: "Registrarse"
+                            font_size: 15
+                            on_release: app.register()
+
+                        MDRaisedButton:
+                            text: "Volver"
+                            font_size: 15
+                            on_release: root.manager.current = 'login'
+
+
+#=================================================================================================
+
+<Ui>:
+    MDScreen:
+        name: 'Screen_Menu'
+        md_bg_color: 0, 0, 0, 0
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: '10dp'
+
+            MDBoxLayout:
+                size_hint: 1, 0.2
+                orientation: 'horizontal'
+                padding: '10dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: dp(100)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+
+                    MDLabel:
+                        text: 'Electrical Counter'
+                        font_style: 'H4'
+                        halign:'center'
+                        pos_hint: {'center_y': 0.5}
+
+            MDBoxLayout:
+                size_hint: 1, 0.2
+                orientation: 'horizontal'
+                padding: '10dp'
+                spacing: '10dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 0.5, None
+                    height: dp(115)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+
+                    MDTextField:
+                        id: Consumo_dia
+                        text: ''
+                        halign:'left' 
+                        font_size: 20
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+                          
+                    
+                    MDTextField:
+                        id: Precio_dia
+                        text: ' ' 
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+
+                
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 0.5, None
+                    height: dp(115)
+                    md_bg_color:  0.2, 0.8, 0.5, 1
+                    
+
+                    MDTextField:
+                        id: Consumo_mes
+                        text: ''
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+                        
+                        
+                    MDTextField:
+                        id: Precio_mes
+                        text: ' '
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+
+
+
+
+            MDGridLayout:
+                cols: 2
+                size_hint: 1, 0.8
+                padding: ['10dp','10dp','10dp','10dp',]
+                spacing: '10dp'
+
+                ElementCard:
+                    text: 'Controles'
+                    image: 'Logo_Controles.png'
+                    on_release:
+                        #self.root.current = 'screen1'
+                        on_release: app.button_action_Controles(1) 
+                ElementCard:
+                    text: 'Graficos'
+                    image: 'Logo_Graficas.png'
+                    on_release:
+                        on_release: app.button_action_Graficas(1) 
+                ElementCard:
+                    text: 'Datos Usuario'
+                    image: 'Logo_Usuario.png'
+                    on_release:
+                        on_release: app.button_action_datosUsuario(1)
+                        #root.current = 'screen3'
+                ElementCard:
+                    text: 'Consejos'
+                    image: 'Logo_Consejos.png'
+                    on_release:
+                        on_release: app.button_action_Consejos(1)
+                        #root.current = 'screen4'
+                ElementCard:
+                    text: 'Notificaciones'
+                    image: 'Logo_Notificaciones.png'
+                    on_release:
+                        on_release: app.button_action_Notificaciones(1)
+                        #root.current = 'screen5'
+                ElementCard:
+                    text: 'Servicios'
+                    image: 'Logo_Estadisticas.png'
+                    on_release:
+                        on_release: app.button_action_Servicios(1)
+                        #root.current = 'screen6'
+
+
+#==============================================================================================================================
+
+<Controles>:
+    MDScreen:
+        name: 'screen1'
+        md_bg_color: 0, 0, 0, 0
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '300dp']
+            spacing: '10dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color:  0.2, 0.8, 0.5, 1
+
+                MDLabel:
+                    text: 'Controles'
+                    halign: 'center'
+                    valign: 'middle'
+                    theme_text_color: 'Primary'
+                    font_style: 'H4'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "115dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDTextField:
+                    id: switch1  
+                    hint_text: "Ingrese referencia"
+                    multiline: False 
+                    size_hint_y: None
+                    height: "50dp"  
+                    line_color_normal: 1, 1, 1, 1  
+                    line_color_focus: 1, 1, 1, 1 
+                    md_bg_color: 0.2, 0.8, 0.5, 1  
+                    text_color: 1, 1, 1, 1  
+                    halign: 'center'  
+                    valign: 'middle'  
+                    font_size: "20sp"  
+                    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "60dp", "50dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_1( self.active) 
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "115dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDTextField:
+                    id: switch2
+                    hint_text: "Ingrese referencia"
+                    multiline: False 
+                    size_hint_y: None
+                    height: "50dp"  
+                    line_color_normal: 1, 1, 1, 1  
+                    line_color_focus: 1, 1, 1, 1 
+                    md_bg_color: 0.2, 0.8, 0.5, 1  
+                    text_color: 1, 1, 1, 1 
+                    halign: 'center'  
+                    valign: 'middle'  
+                    font_size: "20sp"  
+    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "60dp", "50dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_2( self.active)  
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "115dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDTextField:
+                    id: switch3  
+                    hint_text: "Ingrese referencia"
+                    multiline: False 
+                    size_hint_y: None
+                    height: "50dp"  
+                    line_color_normal: 1, 1, 1, 1  
+                    line_color_focus: 1, 1, 1, 1 
+                    md_bg_color: 0.2, 0.8, 0.5, 1  
+                    text_color: 1, 1, 1, 1  
+                    halign: 'center'  
+                    valign: 'middle'  
+                    font_size: "20sp"  
+    
+                MDSwitch:
+                    active: True
+                    size_hint: None, None
+                    size: "60dp", "50dp"
+                    pos_hint: {'center_x': 0.5}
+                    on_active: app.switch_changed_3( self.active) 
+
+
+
+        CustomizeScreen:
+
+            
+
+#==============================================================================================================================
+
+
+<Graficas>:
+    MDScreen:
+        name: 'screen2'
+        CustomizeScreen:
+            text: 'Pantalla de graficos'
+
+
+
+
+#===============================================================================================================================
+<Usuario>:
+    MDScreen:
+        name: 'screen3'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '145dp']
+            spacing: '10dp'
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: '15dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    md_bg_color:  0, 0, 0, 0
+                    size: "200dp", "200dp"
+                    pos_hint: {'center_x': 0.5}
+                    
+                    canvas.before:
+                        Color:
+                            rgba: 0.2, 0.8, 0.5, 1  
+                        Line:
+                            width: 3  
+                            rectangle: self.x, self.y, self.width, self.height
+
+                    MDBoxLayout:
+                        size_hint: (1, 1)  
+                        height: self.minimum_height  
+        
+                        Image:  
+                            size_hint: (1, 1)  
+                            allow_stretch: True 
+                            source: 'LogoDefinitivo.jpg'
+                        
+    
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: dp(100)
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    spacing: '15dp'
+
+                    MDTextField:
+                        id: Usuario
+                        text: ''
+                        font_size: 30
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: dp(200)
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    spacing: '5dp'
+
+                    MDTextField:
+                        id: Plan_UTE
+                        text: ''
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+
+                    MDTextField:
+                        id: CorreoE
+                        text: ''
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+
+                    MDTextField:
+                        id: NuemeroD
+                        text: ''
+                        font_size: 20
+                        halign:'left'
+                        readonly: True  
+                        text_color: 1, 1, 1, 1
+                        spacing: '10dp'
+                
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: 1, None
+                    height: dp(100)
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    spacing: '15dp'
+
+                    MDLabel:
+                        text: ' '
+                        halign: 'left'
+                        valign: 'middle'
+                        theme_text_color: 'Primary'
+                        font_size: 20
+
+                    MDTextField:
+                        id: InformacionP  
+                        hint_text: "Ingrese Aqui"
+                        multiline: False 
+                        size_hint_y: None
+                        height: "100dp"  
+                        text_color: 1, 1, 1, 1  
+                        halign: 'left'  
+                        valign: 'middle'  
+                        font_size: "20sp"  
+
+
+                    
+
+        CustomizeScreen:
+
+
+
+
+
+#===============================================================================================================================
+<Notificaciones>:
+    MDScreen:
+        name: 'screen5'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '10dp']
+            spacing: '20dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color: 0.2, 0.8, 0.5, 1
+
+                MDLabel:
+                    text: 'Notificaciones'
+                    halign: 'center'
+                    valign: 'middle'
+                    theme_text_color: 'Primary'
+                    font_style: 'H4'
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: '0dp'
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    size: "500dp", "200dp"
+                    pos_hint: {'center_x': 0.5}
+                    radius: [0, 0, 0, 0]  # Set all corners to have no radius
+
+                    MDLabel:
+                        id: Notificacion1
+                        text: ''
+                        font_size: 25
+                        halign: 'left'
+                        text_color: 1, 1, 1, 1
+
+                    MDLabel:
+                        id: Notificacion11
+                        text: ''
+                        font_size: 20
+                        halign: 'center'
+                        text_color: 1, 1, 1, 1
+
+                    MDLabel:
+                        id: Notificacion111
+                        text: ''
+                        font_size: 20
+                        halign: 'center'
+                        text_color: 1, 1, 1, 1
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    size: "500dp", "200dp"
+                    pos_hint: {'center_x': 0.5}
+                    radius: [0, 0, 0, 0]  # Set all corners to have no radius
+
+                    MDLabel:
+                        id: Notificacion2
+                        text: ''
+                        font_size: 25
+                        halign: 'left'
+                        text_color: 1, 1, 1, 1
+
+                    MDLabel:
+                        id: Notificacion22
+                        text: 'Usted no tiene notificaciones'
+                        font_size: 20
+                        halign: 'center'
+                        text_color: 1, 1, 1, 1
+
+                    MDLabel:
+                        id: Notificacion222
+                        text: ''
+                        font_size: 20
+                        halign: 'center'
+                        text_color: 1, 1, 1, 1
+
+                MDCard:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    md_bg_color: 0.2, 0.8, 0.5, 1
+                    size: "500dp", "200dp"
+                    pos_hint: {'center_x': 0.5}
+                    radius: [0, 0, 0, 0]  # Set all corners to have no radius
+
+                    MDLabel:
+                        id: Notificacion3
+                        text: ''
+                        font_size: 25
+                        halign: 'left'
+                        text_color: 1, 1, 1, 1
+
+                    MDLabel:
+                        id: Notificacion33
+                        text: ''
+                        font_size: 20
+                        halign: 'center'
+                        text_color: 1, 1, 1, 1
+
+            MDRaisedButton:
+                text: 'Borrar notificaciones'
+                on_release: app.clear_notifications()
+                size_hint: None, None
+                size: "48dp", "48dp"
+                pos_hint: {'center_x': 0.5}
+        CustomizeScreen:  
+
+
+#===============================================================================================================================
+
+<Servicios>:
+    MDScreen:
+        name: 'screen6'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '300dp']
+            spacing: '10dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color:  0.2, 0.8, 0.5, 1
+
+                MDLabel:
+                    text: 'Servicios'
+                    halign: 'center'
+                    valign: 'middle'
+                    theme_text_color: 'Primary'
+                    font_style: 'H4'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Verificar Dispocitivo'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Verificar Dispositivo'
+                    on_release: app.button_action(1)  
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Verificar Servidor'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Verificar Servidor'
+                    on_release: app.button_action(2)  
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: None, None
+                md_bg_color:  0.2, 0.8, 0.5, 1
+                size: "400dp", "100dp"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                
+                MDLabel:
+                    text: 'Datos Generales'
+                    halign: 'center'
+    
+                MDRaisedButton:
+                    text: 'Datos Generales'
+                    on_release: app.button_action(3) 
+                    size_hint: None, None
+                    size: "48dp", "48dp"
+                    pos_hint: {'center_x': 0.5}
+
+
+
+        CustomizeScreen:
+        
+#===============================================================================================================================
+<Consejos>:
+    MDScreen:
+        name: 'Consejos'
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: ['10dp', '10dp', '10dp', '145dp']  # Ajusta el padding para dejar espacio al botón
+            spacing: '10dp'
+
+            MDCard:
+                orientation: 'vertical'
+                size_hint: 1, None
+                height: dp(100)
+                md_bg_color: 0.2, 0.8, 0.5, 1
+
+                MDTextField:
+                    id: consejos_textfield
+                    hint_text: "Mensaje de consejos"
+                    multiline: True
+                    font_size: 20
+                    readonly: True  # Establece esta propiedad en True
+                    disabled: True
+        CustomizeScreen:
